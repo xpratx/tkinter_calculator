@@ -90,6 +90,11 @@ def stimulate_closeParenthesis(event):
 
 root.bind("<Key-parenright>", stimulate_closeParenthesis)
 
+def stimulate_decimal(event):
+    btn(".")
+
+root.bind("<Key-period>", stimulate_decimal)
+
 b1 = CTkButton(root, text='1', command=lambda : btn(1), font=custom_font, height=button_size,width=button_size, fg_color="#B33F62")      #you have to use the lambda function, or else all the buttons are
 b1.place(x=20, y=110, )            #pre pressed when you start the program
 
