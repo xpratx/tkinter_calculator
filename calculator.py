@@ -1,9 +1,10 @@
 from tkinter import *
 from customtkinter import *
+import math
 
 root = CTk()
-root.minsize(500,500)
-root.maxsize(500,500)
+root.minsize(700,500)
+root.maxsize(700,500)
 root.title("Calculator")
 
 
@@ -19,8 +20,10 @@ def btn(no):
 
 def calculation():
     global eqn
-    a = area.get()
-    b = eval(a)
+    expression = area.get()
+    expression_with_e = expression.replace('e', str(math.e))
+
+    b = eval(expression_with_e, {'sin': math.sin, 'cos': math.cos, 'tan':math.tan, 'sqrt': math.sqrt, 'fact':math.factorial, 'log':math.log10})
     eqn = str(b)
     area.delete(0, END)
     area.insert(0, eqn)
@@ -34,7 +37,7 @@ def clear():
 
 custom_font = ("Arial",18)
 
-area = CTkEntry(root, textvariable= var,  font=custom_font, height=60, width=460)
+area = CTkEntry(root, textvariable= var,  font=custom_font, height=60, width=660)
 area.place(x=20, y=30)
 
 
@@ -42,58 +45,54 @@ gap = 30
 button_size = 70
 
 
-def stimulate_nums_press(event):
+def simulate_nums_press(event):
     key = event.char
     if key.isdigit:
         btn(int(key))
-
+        
 for i in range(10):
-    root.bind(f"<Key-{i}>", stimulate_nums_press)
+    root.bind(f"<Key-{i}>", simulate_nums_press)
 
-def stimulate_plus(event):
+def simulate_plus(event):
     btn("+")
 
-root.bind('<Key-plus>', stimulate_plus)
+root.bind('<Key-plus>', simulate_plus)
 
-def stimulate_minus(event):
+def simulate_minus(event):
     btn("-")
 
-root.bind('<Key-minus>', stimulate_minus)
+root.bind('<Key-minus>', simulate_minus)
 
-def stimulate_mul(event):
+def simulate_mul(event):
     btn("*")
 
-root.bind('<Key-asterisk>', stimulate_mul)
+root.bind('<Key-asterisk>', simulate_mul)
 
-def stimulate_div(event):
+def simulate_div(event):
     btn("/")
 
-root.bind('<Key-slash>', stimulate_div)
+root.bind('<Key-slash>', simulate_div)
 
-def stimulate_enter(event):
+def simulate_enter(event):
     calculation()
 
-root.bind("<Return>", stimulate_enter)
+root.bind("<Return>", simulate_enter)
 
-def stimulate_clear(event):
+def simulate_clear(event):
     clear()
 
-root.bind("<BackSpace>", stimulate_clear)
+root.bind("<BackSpace>", simulate_clear)
 
-def stimulate_openParenthesis(event):
+def simulate_openParenthesis(event):
     btn("(")
 
-root.bind("<Key-parenleft>", stimulate_openParenthesis)
+root.bind("<Key-parenleft>", simulate_openParenthesis)
 
-def stimulate_closeParenthesis(event):
+def simulate_closeParenthesis(event):
     btn(")")
 
-root.bind("<Key-parenright>", stimulate_closeParenthesis)
+root.bind("<Key-parenright>", simulate_closeParenthesis)
 
-def stimulate_decimal(event):
-    btn(".")
-
-root.bind("<Key-period>", stimulate_decimal)
 
 b1 = CTkButton(root, text='1', command=lambda : btn(1), font=custom_font, height=button_size,width=button_size, fg_color="#B33F62")      #you have to use the lambda function, or else all the buttons are
 b1.place(x=20, y=110, )            #pre pressed when you start the program
@@ -152,4 +151,27 @@ b_openParenthesis.place(x=20+(3*button_size)+(3*gap), y=110+(2*button_size)+(2*g
 b_closeParenthesis = CTkButton(root, text=")", command=lambda : btn(")"), font=custom_font, height=button_size, width=button_size, fg_color="#F9564F" )
 b_closeParenthesis.place(x=20+(4*button_size)+(4*gap), y=110+(2*button_size)+(2*gap))
 
+b_sin = CTkButton(root, text="sin", command=lambda : btn('sin('), font=custom_font, height=button_size, width=button_size,  fg_color="#F9564F")
+b_sin.place(x=20+(5*button_size)+(5*gap), y=110)
+
+b_cos = CTkButton(root, text="cos", command=lambda : btn('cos('), font=custom_font, height=button_size, width=button_size,  fg_color="#F9564F")
+b_cos.place(x=20+(6*button_size)+(6*gap), y=110)
+
+b_tan = CTkButton(root, text="tan", command=lambda : btn("tan("), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_tan.place(x=20+(5*button_size)+(5*gap), y=110+button_size+gap)
+
+b_pow = CTkButton(root, text="^", command=lambda : btn("**"), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_pow.place(x=20+(6*button_size)+(6*gap), y=110+button_size+gap)
+
+b_sqrt = CTkButton(root, text="sqrt", command=lambda : btn("sqrt("), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_sqrt.place(x=20+(5*button_size)+(5*gap), y=110+(2*button_size)+(2*gap))
+
+b_fact = CTkButton(root, text="fact", command=lambda : btn("fact("), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_fact.place(x=20+(6*button_size)+(6*gap), y=110+(2*button_size)+(2*gap))
+
+b_e = CTkButton(root, text="e", command=lambda : btn("e"), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_e.place(x=20+(5*button_size)+(5*gap), y=110+(3*button_size)+(3*gap))
+
+b_fact = CTkButton(root, text="log", command=lambda : btn("log("), font=custom_font, height=button_size,width=button_size, fg_color="#F9564F")
+b_fact.place(x=20+(6*button_size)+(6*gap), y=110+(3*button_size)+(3*gap))
 root.mainloop()
